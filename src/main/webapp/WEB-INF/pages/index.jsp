@@ -8,7 +8,7 @@
 <html>
 <head>
 	<title>Student Management</title>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/styles.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/CSS/styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
