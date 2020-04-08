@@ -43,7 +43,7 @@
 				<!-- <input type="email" name="" placeholder="Email Address" class="input"><br> -->
 				<input type="password" name="studentPassword" placeholder="Password" class="input" required=""><br>
 				<div class="btn">
-					<button>Login</button>
+                                    <input type="submit" formaction="StudentLogin" value="Log In">
 				</div>
 			</form>
 			
