@@ -26,17 +26,29 @@ import org.springframework.web.servlet.ModelAndView;
 public class StudentLoginController {
     @RequestMapping(value = "/StudentLogin",method = RequestMethod.POST)
     public ModelAndView loginCheck(@RequestParam long studentID,@RequestParam String studentPassword)
+            throws ClassNotFoundException,SQLException
     {
         ModelAndView resultPage = new ModelAndView();
+        Student tempObject = new Student();
+        boolean loginFlag = false;
         Student formDetails = new Student(studentID,studentPassword);
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/student-record-database?autoReconnect=true&amp;useSSL=false");
+            Connection dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/student-record-database?autoReconnect=true&useSSL=false","root","1234@rudresh");
             Statement stmt = dbConnection.createStatement();
-            ResultSet userData = stmt.executeQuery("select * from student_login where student_password="+formDetails.getsPassword());
+            ResultSet userData = stmt.executeQuery("select * from student_login where student_id="+formDetails.getsEnNumber());
             userData.next();
             Student dbData = new Student(userData.getString(3),userData.getLong(1),userData.getString(2));
+            if(formDetails.getsEnNumber()==dbData.getsEnNumber()&&formDetails.getsPassword().equals(dbData.getsPassword()))
+            {
+                loginFlag = true;
+                tempObject = dbData;
+            }
+            else
+            {
+                loginFlag = false;
+            }
         }
         catch(SQLException SQLE)
         {
@@ -50,10 +62,10 @@ public class StudentLoginController {
         {
             E.printStackTrace();
         }
-        if(formDetails.getsEnNumber()==170010107036L&&formDetails.getsPassword().equals("rpatel"))
+        if(loginFlag)
         {
-            resultPage.addObject("Data","test");
-            resultPage.setViewName("loginPage");
+            resultPage.addObject("Data",tempObject.getsName());
+            resultPage.setViewName("loginPage");   
         }
         else
         {
