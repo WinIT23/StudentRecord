@@ -35,7 +35,5 @@ public class Student {
         temp /= 10000000;
 
         this.sEntryYear = 2000 + (int) temp;
-        
-        
     }
 }
