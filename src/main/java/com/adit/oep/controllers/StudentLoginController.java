@@ -6,6 +6,8 @@
 package com.adit.oep.controllers;
 
 import com.adit.oep.model.Student;
+import com.adit.oep.service.ConnectionService;
+import com.adit.oep.service.LoginService;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,26 +31,12 @@ public class StudentLoginController {
             throws ClassNotFoundException,SQLException
     {
         ModelAndView resultPage = new ModelAndView();
-        Student tempObject = new Student();
         boolean loginFlag = false;
         Student formDetails = new Student(studentID,studentPassword);
         try
         {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/student-record-database?autoReconnect=true&useSSL=false","root","1234@rudresh");
-            Statement stmt = dbConnection.createStatement();
-            ResultSet userData = stmt.executeQuery("select * from student_login where student_id="+formDetails.getsEnNumber());
-            userData.next();
-            Student dbData = new Student(userData.getString(3),userData.getLong(1),userData.getString(2));
-            if(formDetails.getsEnNumber()==dbData.getsEnNumber()&&formDetails.getsPassword().equals(dbData.getsPassword()))
-            {
-                loginFlag = true;
-                tempObject = dbData;
-            }
-            else
-            {
-                loginFlag = false;
-            }
+            Connection dbConnection = new ConnectionService().getConnection();
+            loginFlag = new LoginService().studentLoginCheck(dbConnection,formDetails);
         }
         catch(SQLException SQLE)
         {
@@ -64,7 +52,7 @@ public class StudentLoginController {
         }
         if(loginFlag)
         {
-            resultPage.addObject("Data",tempObject.getsName());
+            resultPage.addObject("Data",formDetails.getsEnNumber());
             resultPage.setViewName("loginPage");   
         }
         else
