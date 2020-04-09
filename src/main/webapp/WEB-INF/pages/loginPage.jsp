@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>${Data}</h1>
+        ${Data}
     </body>
 </html>

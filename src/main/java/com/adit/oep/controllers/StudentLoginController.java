@@ -20,12 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
- * @author RUDRESH PATEL
+ * @author KHATRI
  */
 @Controller
 public class StudentLoginController {
     @RequestMapping(value = "/StudentLogin",method = RequestMethod.POST)
-    public ModelAndView loginCheck(@RequestParam long studentID,@RequestParam String studentPassword)
+    public ModelAndView loginCheck(@RequestParam("studentID") long studentID,@RequestParam("studentPassword") String studentPassword)
             throws ClassNotFoundException,SQLException
     {
         ModelAndView resultPage = new ModelAndView();
@@ -34,8 +34,8 @@ public class StudentLoginController {
         Student formDetails = new Student(studentID,studentPassword);
         try
         {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/student-record-database?autoReconnect=true&useSSL=false","root","1234@rudresh");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false","root","root");
             Statement stmt = dbConnection.createStatement();
             ResultSet userData = stmt.executeQuery("select * from student_login where student_id="+formDetails.getsEnNumber());
             userData.next();
