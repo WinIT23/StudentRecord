@@ -5,6 +5,7 @@
  */
 package com.adit.oep.controllers;
 
+import com.adit.oep.model.MyDbConnection;
 import com.adit.oep.model.Student;
 
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class StudentLoginController {
+    
     @RequestMapping(value = "/StudentLogin",method = RequestMethod.POST)
     public ModelAndView loginCheck(@RequestParam("studentID") long studentID,@RequestParam("studentPassword") String studentPassword)
             throws ClassNotFoundException,SQLException
@@ -32,15 +35,17 @@ public class StudentLoginController {
         Student tempObject = new Student();
         boolean loginFlag = false;
         Student formDetails = new Student(studentID,studentPassword);
+        String dbUrl = "jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false";
+        String dbName = "root";
+        String dbPass = "root";
+        MyDbConnection con = new MyDbConnection(dbUrl, dbName, dbPass, studentID, studentPassword);
         try
         {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false","root","root");
-            Statement stmt = dbConnection.createStatement();
-            ResultSet userData = stmt.executeQuery("select * from student_login where student_id="+formDetails.getsEnNumber());
-            userData.next();
-            Student dbData = new Student(userData.getString(3),userData.getLong(1),userData.getString(2));
-            if(formDetails.getsEnNumber()==dbData.getsEnNumber()&&formDetails.getsPassword().equals(dbData.getsPassword()))
+           Connection dbConnection = con.makeConnection(dbUrl, dbName, dbPass);
+           ResultSet userData = con.insertData();
+           userData.next();
+           Student dbData = new Student(userData.getString(3),userData.getLong(1),userData.getString(2));
+           if(formDetails.getsEnNumber()==dbData.getsEnNumber()&&formDetails.getsPassword().equals(dbData.getsPassword()))
             {
                 loginFlag = true;
                 tempObject = dbData;
