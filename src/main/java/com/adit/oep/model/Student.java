@@ -6,20 +6,35 @@
 package com.adit.oep.model;
 
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Win_It
  */
+
+@Entity
+@Table(name="student_login")
 public class Student {
-
+    @Column(name="student_name")
     private String sName;
+    @Id
+    @Column(name="student_id")
     private long sEnNumber;
+    @Column(name="student_pass")
     private String sPassword;
+    @Transient
     private int sBranchCode;
+    @Transient
     private int sEntryYear;
-
+    
+    @Transient
     private List<Assignment> assignmentDone;
+    @Transient
     private List<Assignment> assignmentRemain;
 
     public Student()
@@ -75,6 +90,12 @@ public class Student {
     
     public void setsEnNumber(long sEnNumber)
     {
+        this.sEnNumber = sEnNumber;
+    }
+
+    
+
+    public void setSEnNumber(long sEnNumber) {
         this.sEnNumber = sEnNumber;
     }
 }
