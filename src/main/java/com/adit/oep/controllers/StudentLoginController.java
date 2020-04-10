@@ -7,6 +7,8 @@ package com.adit.oep.controllers;
 
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.model.Student;
+import com.adit.oep.service.ConnectionService;
+import com.adit.oep.service.LoginService;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,7 +34,6 @@ public class StudentLoginController {
             throws ClassNotFoundException,SQLException
     {
         ModelAndView resultPage = new ModelAndView();
-        Student tempObject = new Student();
         boolean loginFlag = false;
         Student formDetails = new Student(studentID,studentPassword);
         String dbUrl = "jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false";
@@ -45,6 +46,7 @@ public class StudentLoginController {
         
         if(formDetails.getsPassword().equals(tempObject.getsPassword())){
             resultPage.addObject("Data",tempObject.getsName());
+        
             resultPage.setViewName("loginPage");   
         }
         else
