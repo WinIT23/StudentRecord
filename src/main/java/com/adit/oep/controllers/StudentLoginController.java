@@ -5,17 +5,11 @@
  */
 package com.adit.oep.controllers;
 
+import java.sql.SQLException;
+
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.model.Student;
-import com.adit.oep.service.ConnectionService;
-import com.adit.oep.service.LoginService;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,32 +22,29 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class StudentLoginController {
-    
-    @RequestMapping(value = "/StudentLogin",method = RequestMethod.POST)
-    public ModelAndView loginCheck(@RequestParam("studentID") long studentID,@RequestParam("studentPassword") String studentPassword)
-            throws ClassNotFoundException,SQLException
-    {
+
+    @RequestMapping(value = "/StudentLogin", method = RequestMethod.POST)
+    public ModelAndView loginCheck(@RequestParam("studentID") long studentID, @RequestParam("studentPassword") String studentPassword)
+            throws ClassNotFoundException, SQLException {
         ModelAndView resultPage = new ModelAndView();
         boolean loginFlag = false;
-        Student formDetails = new Student(studentID,studentPassword);
+        Student formDetails = new Student(studentID, studentPassword);
         String dbUrl = "jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false";
         String dbName = "root";
         String dbPass = "root";
-        
+
         MyDbConnection con = new MyDbConnection();
-        
-        tempObject = con.fetchStudent(studentID);
-        
-        if(formDetails.getsPassword().equals(tempObject.getsPassword())){
-            resultPage.addObject("Data",tempObject.getsName());
-        
-            resultPage.setViewName("loginPage");   
-        }
-        else
-        {
+
+        Student tempObject = con.fetchStudent(studentID);
+
+        if (formDetails.getsPassword().equals(tempObject.getsPassword())) {
+            resultPage.addObject("Data", tempObject.getsName());
+
+            resultPage.setViewName("loginPage");
+        } else {
             resultPage.setViewName("index");
         }
-        
+
 //        MyDbConnection con = new MyDbConnection(dbUrl, dbName, dbPass, studentID, studentPassword);
 //        try
 //        {
