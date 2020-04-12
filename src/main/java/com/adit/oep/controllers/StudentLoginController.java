@@ -9,6 +9,8 @@ import java.sql.SQLException;
 
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.model.Student;
+import com.adit.oep.model.Teacher;
+import com.adit.oep.service.TeacherLoginService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +29,11 @@ public class StudentLoginController {
     public ModelAndView loginCheck(@RequestParam("studentID") long studentID, @RequestParam("studentPassword") String studentPassword)
             throws ClassNotFoundException, SQLException {
         ModelAndView resultPage = new ModelAndView();
-        boolean loginFlag = false;
+//        boolean loginFlag = false;
         Student formDetails = new Student(studentID, studentPassword);
-        String dbUrl = "jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false";
-        String dbName = "root";
-        String dbPass = "root";
+//        String dbUrl = "jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false";
+//        String dbName = "root";
+//        String dbPass = "root";
 
         MyDbConnection con = new MyDbConnection();
 
@@ -83,6 +85,31 @@ public class StudentLoginController {
 //        {
 //            resultPage.setViewName("index");
 //        }
+        return resultPage;
+    }
+    
+    @RequestMapping(value = "/TeacherLogin",method = RequestMethod.POST)
+    public ModelAndView teacherLoginCheck(@RequestParam ("teacherName") String teacherName,@RequestParam ("teacherPass") String teacherPass){
+        
+        ModelAndView resultPage = new ModelAndView();
+        
+        Teacher tempObject ;
+        
+        Teacher formDetails = new Teacher(teacherName, teacherPass);
+        
+        TeacherLoginService tls = new TeacherLoginService();
+        
+        tempObject = tls.fetchTeacher(teacherName);
+        
+        if(formDetails.gettPassword().equals(tempObject.gettPassword())){
+            resultPage.addObject("Data",tempObject.gettName());
+        
+            resultPage.setViewName("loginPage");   
+        }
+        else
+        {
+            resultPage.setViewName("index");
+        }
         return resultPage;
     }
 }
