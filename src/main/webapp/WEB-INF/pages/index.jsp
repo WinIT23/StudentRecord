@@ -50,11 +50,11 @@
 		</div>
 		<div class="teacher-signup-form">
 			<form method="POST" action="#">
-				<input type="number" name="TeacherID" placeholder="Teachers ID" class="input" required=""><br>
+				<input type="text" name="teacherName" placeholder="Teacher Name" class="input" required=""><br>
 				<!-- <input type="email" name="" placeholder="Email Address" class="input"><br> -->
-				<input type="password" name="TeacherPassword" placeholder="Password" class="input" required=""><br>
+				<input type="password" name="teacherPass" placeholder="Password" class="input" required=""><br>
 				<div class="btn">
-					<button>Login</button>
+                                    <button formaction="TeacherLogin">Login</button>
 				</div>
 			</form>
 			
