@@ -5,6 +5,7 @@
  */
 package com.adit.oep.model;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +54,26 @@ public class Student {
 
         processEnrollmentNumber();
     }
-
+     
+    public int getBranchCode(long enNo){
+//        170010107019
+        enNo /= 1000;
+        return (int) (enNo % 100);
+    }
+    
+    public int getYear(long enNo){
+//        long temp = this.sEnNumber;
+//        temp /= 1000;
+//        this.sBranchCode = (int) (temp % 100);
+          
+        enNo /= 100000;
+        int i =(int) (enNo /= 100000); 
+        
+        int year = java.time.Year.now().getValue() % 100;
+        
+        return year - i;
+        
+    }
     private void processEnrollmentNumber() {
         long temp = this.sEnNumber;
         temp /= 1000;

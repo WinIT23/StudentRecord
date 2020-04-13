@@ -5,12 +5,22 @@
  */
 package com.adit.oep.controllers;
 
+
+import com.adit.oep.model.Assignment1;
 import java.sql.SQLException;
 
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.model.Student;
 import com.adit.oep.model.Teacher;
+import com.adit.oep.service.FetchAssginmentService;
+
 import com.adit.oep.service.TeacherLoginService;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,13 +45,34 @@ public class StudentLoginController {
 //        String dbName = "root";
 //        String dbPass = "root";
 
+        int stBranchCode = formDetails.getBranchCode(studentID);
+        int stYear = formDetails.getYear(studentID);
+        
+        FetchAssginmentService fas = new FetchAssginmentService();
+        
+        List l = fas.fetchAllAssignment();
+        
+        List s = new ArrayList();
+        
+        
+        
+        for (Iterator it = l.iterator(); it.hasNext();) {
+            Assignment1 object = (Assignment1) it.next();
+            
+            if( object.getBranch() == stBranchCode && object.getYear() == stYear){
+                s.add(object);
+            }
+        }
+      
         MyDbConnection con = new MyDbConnection();
 
         Student tempObject = con.fetchStudent(studentID);
 
         if (formDetails.getsPassword().equals(tempObject.getsPassword())) {
             resultPage.addObject("Data", tempObject.getsName());
-
+            resultPage.addObject("assignments",s);
+//            resultPage.addObject("Date",);
+            resultPage.addObject("Date", java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd MM yyyy")));
             resultPage.setViewName("loginPage");
         } else {
             resultPage.setViewName("index");
@@ -95,16 +126,25 @@ public class StudentLoginController {
         
         Teacher tempObject ;
         
+        
+        
         Teacher formDetails = new Teacher(teacherName, teacherPass);
         
         TeacherLoginService tls = new TeacherLoginService();
         
         tempObject = tls.fetchTeacher(teacherName);
         
-        if(formDetails.gettPassword().equals(tempObject.gettPassword())){
-            resultPage.addObject("Data",tempObject.gettName());
+        FetchAssginmentService fas = new FetchAssginmentService();
         
-            resultPage.setViewName("loginPage");   
+        List l = fas.fetchAllAssignment();
+        
+       
+        
+        if(formDetails.gettPassword().equals(tempObject.gettPassword())){
+            resultPage.addObject("assignments",l);
+            resultPage.addObject("Data",tempObject.gettName());
+            
+            resultPage.setViewName("teacherLoginPage");   
         }
         else
         {
