@@ -28,11 +28,13 @@
     <body>
         
         <h1>Welcome ${Data}</h1>
+        
+        ${As.getAssignment_name()}
        
         <form method="POST">
             <input type="hidden" name="tName" value="${Data}">
             <input type="number" name="assignmentYear" placeholder="Year"><br>
-            <input type="text" name="assignmentBranch" placeholder="Branch" ><br>
+<!--            <input type="text" name="assignmentBranch" placeholder="Branch" ><br>-->
             <input type="text" name="assginmentSubmitDate" placeholder="Submition date"><br>
             <input type="text" name="assginmentTitle" placeholder="AssignmentTitle"><br>
             <button formaction="AddAssign">Add</button>
@@ -46,10 +48,10 @@
             
             <c:forEach items="${assignments}" var="assignment">
                 <tr>
-                    <td>${assignment.getYear()}</td>
-                    <td>${assignment.getBranch()}</td>
+                    <td>${assignment.getAssignment_year()}</td>
+                    <td>${year}</td>
                     <td>${assignment.getAssignment_name()}</td>
-                    <td>${assignment.getSubmit_date()}</td>
+                    <td>${assignment.getSubmission_date()}</td>
                 </tr>
             </c:forEach>
         </table>

@@ -7,6 +7,7 @@ package com.adit.oep.controllers;
 
 
 import com.adit.oep.model.Assignment1;
+import com.adit.oep.model.Assignment2;
 import java.sql.SQLException;
 
 import com.adit.oep.service.MyDbConnection;
@@ -57,9 +58,9 @@ public class StudentLoginController {
         
         
         for (Iterator it = l.iterator(); it.hasNext();) {
-            Assignment1 object = (Assignment1) it.next();
+            Assignment2 object = (Assignment2) it.next();
             
-            if( object.getBranch() == stBranchCode && object.getYear() == stYear){
+            if(object.getAssignment_year() == stYear){
                 s.add(object);
             }
         }
@@ -137,13 +138,13 @@ public class StudentLoginController {
         FetchAssginmentService fas = new FetchAssginmentService();
         
         List l = fas.fetchAllAssignment();
-        
+//        
        
         
         if(formDetails.gettPassword().equals(tempObject.gettPassword())){
             resultPage.addObject("assignments",l);
             resultPage.addObject("Data",tempObject.gettName());
-            
+            resultPage.addObject("year",tempObject.getBranch());
             resultPage.setViewName("teacherLoginPage");   
         }
         else

@@ -5,8 +5,9 @@
  */
 package com.adit.oep.service;
 
-import com.adit.oep.model.Assignment1;
-import com.adit.oep.model.Student;
+//import com.adit.oep.model.Assignment1;
+import com.adit.oep.model.Assignment2;
+import com.adit.oep.model.StudentAssignment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,8 +21,8 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class AddAssignmentService {
     
-    public void addAssignment(Assignment1 as){
-        Configuration cfg = new Configuration().configure().addAnnotatedClass(Assignment1.class);
+    public void addAssignment(Assignment2 as){
+        Configuration cfg = new Configuration().configure().addAnnotatedClass(Assignment2.class);
         
         ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
         
@@ -36,7 +37,29 @@ public class AddAssignmentService {
 //        Assignment1 as = new Assignment1(year, branch, assignment_name, date);
         
         session.save(as);
+        t.commit();
+//        session.close();
+//        factory.close();
         
+    }
+    
+    public void addStudentAssignment(StudentAssignment sa){
+        
+        Configuration cfg = new Configuration().configure().addAnnotatedClass(StudentAssignment.class);
+        
+        ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
+        
+        SessionFactory factory=cfg.buildSessionFactory(reg);    
+
+        //creating session object    
+        Session session = factory.openSession();
+
+        //creating transaction object    
+        Transaction t = session.beginTransaction();
+        
+//        Assignment1 as = new Assignment1(year, branch, assignment_name, date);
+        
+        session.save(sa);
         t.commit();
         
     }
