@@ -18,6 +18,7 @@ import com.adit.oep.service.FetchAssginmentService;
 import com.adit.oep.service.TeacherLoginService;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -72,6 +73,7 @@ public class StudentLoginController {
         if (formDetails.getsPassword().equals(tempObject.getsPassword())) {
             resultPage.addObject("Data", tempObject.getsName());
             resultPage.addObject("assignments",s);
+            
 //            resultPage.addObject("Date",);
             resultPage.addObject("Date", java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd MM yyyy")));
             resultPage.setViewName("loginPage");

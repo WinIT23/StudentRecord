@@ -14,6 +14,7 @@ import com.adit.oep.service.AddAssignmentService;
 import com.adit.oep.service.FetchAssginmentService;
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.service.TeacherLoginService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,44 +28,49 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AddAssignmentController {
-    
-    @RequestMapping(value = "/AddAssign",method = RequestMethod.POST)
-    public ModelAndView addAs(@RequestParam("tName")String teacherName,@RequestParam("assignmentYear") int year,@RequestParam("assginmentTitle") String assignment_name,@RequestParam("assginmentSubmitDate") String submit_date){
-        
+
+    @RequestMapping(value = "/AddAssign", method = RequestMethod.POST)
+    public ModelAndView addAs(@RequestParam("tName") String teacherName, @RequestParam("assignmentYear") int year, @RequestParam("assginmentTitle") String assignment_name, @RequestParam("assginmentSubmitDate") String submit_date) {
+
         ModelAndView resultPage = new ModelAndView();
-        
+
         AddAssignmentService aas = new AddAssignmentService();
-        
-        Teacher t = new Teacher();
-        
+
+//        Teacher t = new Teacher();
+          boolean isAdded = false;
+          
+
         TeacherLoginService tls = new TeacherLoginService();
-        
+
         int branch = tls.fetchTeacher(teacherName).getBranch();
 
-        
-        Assignment2 as = new Assignment2(assignment_name,submit_date,year,teacherName);
-        
-        aas.addAssignment(as);
-       
-        
         MyDbConnection myCon = new MyDbConnection();
-        
+
         List allStudent = myCon.fetchAllStudent();
-        
+
         for (Object object : allStudent) {
             Student s = (Student) object;
-            
-            if(s.getYear(s.getsEnNumber()) == year && s.getBranchCode(s.getsEnNumber()) == branch){
-                StudentAssignment sa = new StudentAssignment(s.getsEnNumber(),assignment_name,false);
+
+            if (s.getYear(s.getsEnNumber()) == year && s.getBranchCode(s.getsEnNumber()) == branch) {
+                StudentAssignment sa = new StudentAssignment(s.getsEnNumber(), assignment_name, false);
                 aas.addStudentAssignment(sa);
+                isAdded = true;
+                
+            }
         }
+
+        Assignment2 as = new Assignment2(assignment_name, submit_date, year, teacherName);
+        if (isAdded) {
+            aas.addAssignment(as);
+            resultPage.addObject("As", as);
+         } else {
+            resultPage.addObject("nostudenterror", "No Student Found!");
         }
-        
+
         FetchAssginmentService fas = new FetchAssginmentService();
-        
+
         List l = fas.fetchAllAssignment();
-        
-        
+
 //        Assignment1 as = new Assignment1(year,t.getBranch(),assignment_name,submit_date);
 //        
 //        
@@ -73,13 +79,13 @@ public class AddAssignmentController {
 //        
 //        aas.addAssignment(as);
 //        
-        resultPage.addObject("result","added successfully");
-        resultPage.addObject("assignments",l);
-        resultPage.addObject("As",as);
-        resultPage.addObject("Data",teacherName);
+        resultPage.addObject("result", "added successfully");
+        resultPage.addObject("assignments", l);
         
-        resultPage.setViewName("teacherLoginPage");   
-        
+        resultPage.addObject("Data", teacherName);
+
+        resultPage.setViewName("teacherLoginPage");
+
         return resultPage;
-        }
+    }
 }

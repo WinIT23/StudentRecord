@@ -16,6 +16,7 @@
     </head>
         <h1>Welcome ${Data}</h1>
         ${Date}
+        <br>year:${Year}<br>
         
         ${assignments}
         
@@ -26,14 +27,14 @@
             <th>Branch</th>
             <th>Name</th>
             <th>Date</th>
-            <c:forEach items="${assignments}" var="assignment">
-                <tr>
-                    <td>${assignment.getYear()}</td>
-                    <td>${assignment.getBranch()}</td>
-                    <td>${assignment.getAssignment_name()}</td>
-                    <td>${assignment.getSubmit_date()}</td>
-                </tr>
-            </c:forEach>
+            <%--<c:forEach items="${assignments}" var="assignment">--%>
+                <!--<tr>-->
+                    <!--<td>${assignment.getYear()}</td>-->
+                    <!--<td>${assignment.getBranch()}</td>-->
+                    <!--<td>${assignment.getAssignment_name()}</td>-->
+                    <!--<td>${assignment.getSubmit_date()}</td>-->
+                <!--</tr>-->
+            <%--</c:forEach>--%>
         </table>
     </body>
 

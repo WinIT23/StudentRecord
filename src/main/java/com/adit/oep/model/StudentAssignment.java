@@ -17,8 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="student_assignment")
 public class StudentAssignment implements Serializable {
+   long student_id;
     @Id
-    long student_id;
     String assignment_name;
     boolean submited;
 

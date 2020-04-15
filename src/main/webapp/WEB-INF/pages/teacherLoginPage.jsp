@@ -29,7 +29,9 @@
         
         <h1>Welcome ${Data}</h1>
         
-        ${As.getAssignment_name()}
+        if(${As.getAssignment_name()} != null){
+        ${As.getAssignment_name()} is added!}
+        ${nostudenterror}
        
         <form method="POST">
             <input type="hidden" name="tName" value="${Data}">
