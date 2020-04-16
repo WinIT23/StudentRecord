@@ -59,6 +59,8 @@ public class StudentLoginController {
         List s = new ArrayList();
         List studentAssignmentList = new ArrayList();
         List teacherBranch = new ArrayList();
+        List assignmentSubject = new ArrayList();
+        List teacherName = new ArrayList();
         Teacher tempTeacher = null;
         
         
@@ -70,6 +72,8 @@ public class StudentLoginController {
                 s.add(object);
                 tempTeacher = new TeacherLoginService().fetchTeacher(object.getTeacher_name());
                 teacherBranch.add(tempTeacher.getBranch());
+                assignmentSubject.add(tempTeacher.getSubject());
+                teacherName.add(tempTeacher.gettName());
             }
         for(Iterator it2 = AllAssignmentList.iterator(); it2.hasNext();)
         {
@@ -93,6 +97,8 @@ public class StudentLoginController {
             resultPage.addObject("Date", java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd MM yyyy")));
             resultPage.addObject("Year",tempObject.getYear(formDetails.getsEnNumber()));
             resultPage.addObject("Branches", teacherBranch);
+            resultPage.addObject("Subjects", assignmentSubject);
+            resultPage.addObject("TeacherName", teacherName);
             resultPage.addObject("AssignmentStatus", studentAssignmentList);
             resultPage.setViewName("loginPage");
         } else {
