@@ -5,6 +5,8 @@
  */
 package com.adit.oep.model;
 
+
+import java.util.Date;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +57,30 @@ public class Student implements Serializable {
 
         processEnrollmentNumber();
     }
+     
+    public int getBranchCode(long enNo){
+//        170010107019
+        enNo /= 1000;
+        return (int) (enNo % 100);
+    }
+    
+    public int getYear(long enNo){
+        enNo /= 100000;
+        int i =(int) (enNo /= 100000); 
+        
+        return (java.time.Year.now().getValue() % 100) - i;
+    }
+    private void processEnrollmentNumber() {
+        long temp = this.sEnNumber;
+        temp /= 1000;
+        this.sBranchCode = (int) (temp % 100);
+        temp /= 10000000;
 
-    public String getsPassword() {
+        this.sEntryYear = 2000 + (int) temp;
+    }
+    
+    public String getsPassword()
+    {
         return sPassword;
     }
 

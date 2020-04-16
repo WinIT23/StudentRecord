@@ -5,6 +5,7 @@
  */
 package com.adit.oep.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,12 +18,39 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="teacher_login")
-public class Teacher {
+public class Teacher implements Serializable {
     @Id
     @Column(name="teacher_name")
     String tName;
     @Column(name="teacher_pass")
     String tPassword;
+    @Column(name="teacher_branch")
+    int branch;
+    @Column(name="teacher_subject")
+    int subject;
+
+    public Teacher(String tName, String tPassword, int branch, int subject) {
+        this.tName = tName;
+        this.tPassword = tPassword;
+        this.branch = branch;
+        this.subject = subject;
+    }
+
+    public int getBranch() {
+        return branch;
+    }
+
+    public void setBranch(int branch) {
+        this.branch = branch;
+    }
+
+    public int getSubject() {
+        return subject;
+    }
+
+    public void setSubject(int subject) {
+        this.subject = subject;
+    }
 
     public Teacher() {
     }

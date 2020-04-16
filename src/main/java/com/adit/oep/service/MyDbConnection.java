@@ -6,6 +6,7 @@
 package com.adit.oep.service;
 
 import com.adit.oep.model.Student;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -42,6 +43,18 @@ public class MyDbConnection {
         
         t.commit();
         return s;
+    }
+    
+    public List fetchAllStudent(){
+        Configuration cfg = new Configuration().configure().addAnnotatedClass(Student.class);
+        
+        ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
+        
+        SessionFactory factory = cfg.buildSessionFactory(reg);
+        
+        Session session = factory.openSession();
+        
+        return session.createCriteria(Student.class).list();
     }
     
 //    public MyDbConnection(String url,String dbName,String dbPass,Long sEnNumber,String sPass) {
