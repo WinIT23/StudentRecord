@@ -12,6 +12,7 @@ import java.sql.SQLException;
 
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.model.Student;
+import com.adit.oep.model.StudentAssignment;
 import com.adit.oep.model.Teacher;
 import com.adit.oep.service.FetchAssginmentService;
 
@@ -53,8 +54,12 @@ public class StudentLoginController {
         FetchAssginmentService fas = new FetchAssginmentService();
         
         List l = fas.fetchAllAssignment();
+        List AllAssignmentList = fas.FetchAllStudentAssignment();
         
         List s = new ArrayList();
+        List studentAssignmentList = new ArrayList();
+        List teacherBranch = new ArrayList();
+        Teacher tempTeacher = null;
         
         
         
@@ -63,19 +68,32 @@ public class StudentLoginController {
             
             if(object.getAssignment_year() == stYear){
                 s.add(object);
+                tempTeacher = new TeacherLoginService().fetchTeacher(object.getTeacher_name());
+                teacherBranch.add(tempTeacher.getBranch());
             }
+        for(Iterator it2 = AllAssignmentList.iterator(); it2.hasNext();)
+        {
+            StudentAssignment tempObject = (StudentAssignment) it2.next();
+            if(tempObject.getStudent_id()==formDetails.getsEnNumber())
+            {
+                studentAssignmentList.add(tempObject);
+            }
+        }
         }
       
         MyDbConnection con = new MyDbConnection();
 
         Student tempObject = con.fetchStudent(studentID);
 
-        if (formDetails.getsPassword().equals(tempObject.getsPassword())) {
+        if (teacherBranch!=null&&formDetails!=null&&formDetails.getsPassword().equals(tempObject.getsPassword())) {
             resultPage.addObject("Data", tempObject.getsName());
             resultPage.addObject("assignments",s);
             
 //            resultPage.addObject("Date",);
             resultPage.addObject("Date", java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd MM yyyy")));
+            resultPage.addObject("Year",tempObject.getYear(formDetails.getsEnNumber()));
+            resultPage.addObject("Branches", teacherBranch);
+            resultPage.addObject("AssignmentStatus", studentAssignmentList);
             resultPage.setViewName("loginPage");
         } else {
             resultPage.setViewName("index");

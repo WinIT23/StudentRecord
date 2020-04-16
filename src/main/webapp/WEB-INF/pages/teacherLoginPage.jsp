@@ -29,9 +29,9 @@
         
         <h1>Welcome ${Data}</h1>
         
-        if(${As.getAssignment_name()} != null){
-        ${As.getAssignment_name()} is added!}
-        ${nostudenterror}
+        <c:if test="${!empty As.assignment_name}">
+              ${As.assignment_name} is added!!
+        </c:if>
        
         <form method="POST">
             <input type="hidden" name="tName" value="${Data}">

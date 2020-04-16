@@ -18,8 +18,6 @@
         ${Date}
         <br>year:${Year}<br>
         
-        ${assignments}
-        
         <h2>Assignments</h2>
         
         <table>
@@ -27,14 +25,16 @@
             <th>Branch</th>
             <th>Name</th>
             <th>Date</th>
-            <%--<c:forEach items="${assignments}" var="assignment">--%>
-                <!--<tr>-->
-                    <!--<td>${assignment.getYear()}</td>-->
-                    <!--<td>${assignment.getBranch()}</td>-->
-                    <!--<td>${assignment.getAssignment_name()}</td>-->
-                    <!--<td>${assignment.getSubmit_date()}</td>-->
-                <!--</tr>-->
-            <%--</c:forEach>--%>
+            <th>Status</th>
+            <c:forEach items="${assignments}" var="assignment" varStatus="status">
+                <tr>
+                    <td>${assignment.getAssignment_year()}</td>
+                    <td>${Branches[status.index]}</td>
+                    <td>${assignment.getAssignment_name()}</td>
+                    <td>${assignment.getSubmission_date()}</td>
+                    <td><c:if test="${AssignmentStatus[status.index].isSubmited()}">Submitted</c:if><c:if test="${not AssignmentStatus[status.index].isSubmited()}">Not Submitted</c:if></td>
+                </tr>
+            </c:forEach>
         </table>
     </body>
 
