@@ -19,7 +19,7 @@ public class Assignment {
     private final Calendar aDate;
     private Calendar sDate;
     private boolean aStatus;
-    private Subject aSubject;
+    private final Subject aSubject;
 
     public Assignment(String aName, Subject aSubject, String aDate) {
         this.aName = aName;
@@ -61,7 +61,7 @@ public class Assignment {
         return diff / 1000 / 60 / 60 / 24;
     }
 
-    public void assignmentDone() {
+    public void markAsDone() {
         this.aStatus = true;
     }
     
