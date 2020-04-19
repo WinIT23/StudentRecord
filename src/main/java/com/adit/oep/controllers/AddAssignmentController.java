@@ -5,16 +5,13 @@
  */
 package com.adit.oep.controllers;
 
-import com.adit.oep.model.Assignment1;
-import com.adit.oep.model.Assignment2;
+import com.adit.oep.model.Assignment;
 import com.adit.oep.model.Student;
 import com.adit.oep.model.StudentAssignment;
-import com.adit.oep.model.Teacher;
 import com.adit.oep.service.AddAssignmentService;
 import com.adit.oep.service.FetchAssginmentService;
 import com.adit.oep.service.MyDbConnection;
 import com.adit.oep.service.TeacherLoginService;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +56,7 @@ public class AddAssignmentController {
             }
         }
 
-        Assignment2 as = new Assignment2(assignment_name, submit_date, year, teacherName);
+        Assignment as = new Assignment(assignment_name, submit_date, year, teacherName);
         if (isAdded) {
             aas.addAssignment(as);
             resultPage.addObject("As", as);

@@ -6,8 +6,7 @@
 package com.adit.oep.controllers;
 
 
-import com.adit.oep.model.Assignment1;
-import com.adit.oep.model.Assignment2;
+import com.adit.oep.model.Assignment;
 import java.sql.SQLException;
 
 import com.adit.oep.service.MyDbConnection;
@@ -17,10 +16,9 @@ import com.adit.oep.model.Teacher;
 import com.adit.oep.service.FetchAssginmentService;
 
 import com.adit.oep.service.TeacherLoginService;
+import com.adit.oep.service.UpdateStudentAssignmentStatus;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -66,7 +65,7 @@ public class StudentLoginController {
         
         
         for (Iterator it = l.iterator(); it.hasNext();) {
-            Assignment2 object = (Assignment2) it.next();
+            Assignment object = (Assignment) it.next();
             
             if(object.getAssignment_year() == stYear){
                 s.add(object);
@@ -90,7 +89,7 @@ public class StudentLoginController {
         Student tempObject = con.fetchStudent(studentID);
 
         if (teacherBranch!=null&&formDetails!=null&&formDetails.getsPassword().equals(tempObject.getsPassword())) {
-            resultPage.addObject("Data", tempObject.getsName());
+            resultPage.addObject("Data", tempObject);
             resultPage.addObject("assignments",s);
             
 //            resultPage.addObject("Date",);
@@ -178,5 +177,17 @@ public class StudentLoginController {
             resultPage.setViewName("index");
         }
         return resultPage;
+    }
+    
+    @RequestMapping(value = "/SubmitAssignment",method = RequestMethod.POST)
+    @ResponseBody
+    public String submitAssignment(@RequestParam ("completeAssignment") String completeAssignment, @RequestParam("studentEnno") long studentEnno){
+         
+            UpdateStudentAssignmentStatus usa = new UpdateStudentAssignmentStatus();
+            
+            usa.updateStatus(completeAssignment, studentEnno);
+            
+        
+        return "successfully submitted assignment"+ completeAssignment;
     }
 }

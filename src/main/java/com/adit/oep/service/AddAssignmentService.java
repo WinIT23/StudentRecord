@@ -6,7 +6,7 @@
 package com.adit.oep.service;
 
 //import com.adit.oep.model.Assignment1;
-import com.adit.oep.model.Assignment2;
+import com.adit.oep.model.Assignment;
 import com.adit.oep.model.StudentAssignment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,8 +21,8 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class AddAssignmentService {
     
-    public void addAssignment(Assignment2 as){
-        Configuration cfg = new Configuration().configure().addAnnotatedClass(Assignment2.class);
+    public void addAssignment(Assignment as){
+        Configuration cfg = new Configuration().configure().addAnnotatedClass(Assignment.class);
         
         ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
         

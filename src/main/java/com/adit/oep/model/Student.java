@@ -36,10 +36,10 @@ public class Student implements Serializable {
     @Transient
     private int sEntryYear;
 
-    @Transient
-    private List<Assignment> assignmentDone;
-    @Transient
-    private List<Assignment> assignmentRemain;
+//    @Transient
+//    private List<Assignment> assignmentDone;
+//    @Transient
+//    private List<Assignment> assignmentRemain;
 
     public Student() {
         this.sEnNumber = 0L;
@@ -108,30 +108,21 @@ public class Student implements Serializable {
         this.sEnNumber = sEnNumber;
     }
 
-    private void processEnrollmentNumber() {
-        long temp = this.sEnNumber;
-        temp /= 1000;
-        this.sBranchCode = (int) (temp % 100);
-        temp /= 10000000;
-
-        this.sEntryYear = 2000 + (int) temp;
-    }
-
-    private void refreshList() {
-        for (Assignment as : this.assignmentRemain) {
-            if (as.isComplete()) {
-                this.assignmentRemain.remove(as);
-                this.assignmentDone.add(as);
-            }
-        }
-    }
-    
-    public void addAssignment(String aName, int subCode, String todayDate, String subDates, String facultyName) {
-        
-        // TO-DO :  Get subject name from a predefined list
-        this.assignmentRemain.add(new Assignment(aName,
-                                                new Subject(subCode, 
-                                                            facultyName), 
-                                                todayDate, todayDate));
-    }
+//    private void refreshList() {
+//        for (Assignment as : this.assignmentRemain) {
+//            if (as.isComplete()) {
+//                this.assignmentRemain.remove(as);
+//                this.assignmentDone.add(as);
+//            }
+//        }
+//    }
+//    
+//    public void addAssignment(String aName, int subCode, String todayDate, String subDates, String facultyName) {
+//        
+//        // TO-DO :  Get subject name from a predefined list
+//        this.assignmentRemain.add(new Assignment(aName,
+//                                                new Subject(subCode, 
+//                                                            facultyName), 
+//                                                todayDate, todayDate));
+//    }
 }

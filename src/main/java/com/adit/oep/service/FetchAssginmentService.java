@@ -5,7 +5,7 @@
  */
 package com.adit.oep.service;
 
-import com.adit.oep.model.Assignment2;
+import com.adit.oep.model.Assignment;
 import com.adit.oep.model.StudentAssignment;
 import java.util.List;
 import org.hibernate.Session;
@@ -26,7 +26,7 @@ public class FetchAssginmentService {
     public List fetchAllAssignment(){
         
        
-        Configuration cfg = new Configuration().configure().addAnnotatedClass(Assignment2.class);
+        Configuration cfg = new Configuration().configure().addAnnotatedClass(Assignment.class);
         
         ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
         
@@ -34,7 +34,7 @@ public class FetchAssginmentService {
         
         Session session = factory.openSession();
         
-        return session.createCriteria(Assignment2.class).list();
+        return session.createCriteria(Assignment.class).list();
         
         
 

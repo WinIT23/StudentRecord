@@ -15,7 +15,21 @@
         <title>Student Home</title>
        
     </head>
-        <h1>Welcome ${Data}</h1>
+        <h1>Welcome ${Data.getsName()}</h1>
+        
+        <h5>Select an assignment</h5>
+        <form method="POST" action="SubmitAssignment">
+            <input type="hidden" name="studentEnno" value="${Data.getsEnNumber()}">
+            <select id="completeAssignment" name="completeAssignment">
+                 <option value="">Select assignment name</option>
+                <c:forEach items="${assignments}" var="assignment" varStatus="status">
+                <c:if test="${not AssignmentStatus[status.index].isSubmited()}">
+                        <option value="${assignment.getAssignment_name()}">${assignment.getAssignment_name()}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+            <input type="submit">
+        </form>
         
         <h2>Assignments</h2>
         
