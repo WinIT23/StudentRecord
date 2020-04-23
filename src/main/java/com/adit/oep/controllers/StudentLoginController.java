@@ -40,14 +40,11 @@ public class StudentLoginController {
     @RequestMapping(value = "/StudentLogin", method = RequestMethod.POST)
     public ModelAndView loginCheck(@RequestParam("studentID") long studentID, @RequestParam("studentPassword") String studentPassword)
             throws ClassNotFoundException, SQLException {
+        
         ModelAndView resultPage = new ModelAndView();
-//        boolean loginFlag = false;
-        Student formDetails = new Student(studentID, studentPassword);
-//        String dbUrl = "jdbc:mysql://localhost:3306/student_record?autoReconnect=true&useSSL=false";
-//        String dbName = "root";
-//        String dbPass = "root";
 
-        int stBranchCode = formDetails.getBranchCode(studentID);
+        Student formDetails = new Student(studentID, studentPassword);
+
         int stYear = formDetails.getYear(studentID);
         
         FetchAssginmentService fas = new FetchAssginmentService();
@@ -74,28 +71,28 @@ public class StudentLoginController {
                 assignmentSubject.add(tempTeacher.getSubject());
                 teacherName.add(tempTeacher.gettName());
             }
-        for(Iterator it2 = AllAssignmentList.iterator(); it2.hasNext();)
-        {
-            StudentAssignment tempObject = (StudentAssignment) it2.next();
-            if(tempObject.getStudent_id()==formDetails.getsEnNumber())
+            for(Iterator it2 = AllAssignmentList.iterator(); it2.hasNext();)
             {
-                studentAssignmentList.add(tempObject);
+                StudentAssignment tempObject = (StudentAssignment) it2.next();
+                if(tempObject.getStudent_id()==formDetails.getsEnNumber())
+                {
+                    studentAssignmentList.add(tempObject);
+                }
             }
-        }
         }
       
         MyDbConnection con = new MyDbConnection();
 
         Student tempObject = con.fetchStudent(studentID);
 
-        if (teacherBranch!=null&&formDetails!=null&&formDetails.getsPassword().equals(tempObject.getsPassword())) {
+        if (formDetails.getsPassword().equals(tempObject.getsPassword())) {
             resultPage.addObject("Data", tempObject);
             resultPage.addObject("assignments",s);
-            
+
 //            resultPage.addObject("Date",);
             resultPage.addObject("Date", java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("dd MM yyyy")));
             resultPage.addObject("Year",tempObject.getYear(formDetails.getsEnNumber()));
-            resultPage.addObject("Branches", teacherBranch);
+            resultPage.addObject("Branches", !teacherBranch.isEmpty()?teacherBranch:"");
             resultPage.addObject("Subjects", assignmentSubject);
             resultPage.addObject("TeacherName", teacherName);
             resultPage.addObject("AssignmentStatus", studentAssignmentList);
@@ -103,45 +100,7 @@ public class StudentLoginController {
         } else {
             resultPage.setViewName("index");
         }
-
-//        MyDbConnection con = new MyDbConnection(dbUrl, dbName, dbPass, studentID, studentPassword);
-//        try
-//        {
-//           Connection dbConnection = con.makeConnection(dbUrl, dbName, dbPass);
-//           ResultSet userData = con.insertData();
-//           userData.next();
-//           Student dbData = new Student(userData.getString(3),userData.getLong(1),userData.getString(2));
-//           if(formDetails.getsEnNumber()==dbData.getsEnNumber()&&formDetails.getsPassword().equals(dbData.getsPassword()))
-//            {
-//                loginFlag = true;
-//                tempObject = dbData;
-//            }
-//            else
-//            {
-//                loginFlag = false;
-//            }
-//        }
-//        catch(SQLException SQLE)
-//        {
-//            SQLE.printStackTrace();
-//        }
-//        catch(ClassNotFoundException CNFE)
-//        {
-//            CNFE.printStackTrace();
-//        }
-//        catch(Exception E)
-//        {
-//            E.printStackTrace();
-//        }
-//        if(loginFlag)
-//        {
-//            resultPage.addObject("Data",tempObject.getsName());
-//            resultPage.setViewName("loginPage");   
-//        }
-//        else
-//        {
-//            resultPage.setViewName("index");
-//        }
+        
         return resultPage;
     }
     
@@ -150,15 +109,11 @@ public class StudentLoginController {
         
         ModelAndView resultPage = new ModelAndView();
         
-        Teacher tempObject ;
-        
-        
-        
         Teacher formDetails = new Teacher(teacherName, teacherPass);
         
         TeacherLoginService tls = new TeacherLoginService();
         
-        tempObject = tls.fetchTeacher(teacherName);
+        Teacher tempObject = tls.fetchTeacher(teacherName);
         
         FetchAssginmentService fas = new FetchAssginmentService();
         

@@ -4,7 +4,7 @@
     Author     : KHATRI
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,28 +26,28 @@
         </style>
     </head>
     <body>
-        
+
         <h1>Welcome ${Data}</h1>
-        
+
         <c:if test="${!empty As.assignment_name}">
-              ${As.assignment_name} is added!!
+            ${As.assignment_name} is added!!
         </c:if>
-       
+
         <form method="POST">
             <input type="hidden" name="tName" value="${Data}">
             <input type="number" name="assignmentYear" placeholder="Year"><br>
-<!--            <input type="text" name="assignmentBranch" placeholder="Branch" ><br>-->
+            <!--            <input type="text" name="assignmentBranch" placeholder="Branch" ><br>-->
             <input type="text" name="assginmentSubmitDate" placeholder="Submition date"><br>
             <input type="text" name="assginmentTitle" placeholder="AssignmentTitle"><br>
             <button formaction="AddAssign">Add</button>
         </form>
-        
+
         <table>
             <th>Year</th>
             <th>Branch</th>
             <th>Name</th>
             <th>Date</th>
-            
+
             <c:forEach items="${assignments}" var="assignment">
                 <tr>
                     <td>${assignment.getAssignment_year()}</td>
@@ -57,6 +57,6 @@
                 </tr>
             </c:forEach>
         </table>
-       
+
     </body>
 </html>

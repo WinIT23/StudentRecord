@@ -6,21 +6,25 @@
 
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/CSS/styles.css">
         <title>Student Home</title>
-       
     </head>
-        <h1>Welcome ${Data.getsName()}</h1>
+    <body>
+        <h1 class="assignment_header">Welcome, ${Data.getsName()}</h1>
+        <div class="line"></div>
         
-        <h5>Select an assignment</h5>
+        <h5 class="assignment_header_small">Select an assignment</h5>
+        
         <form method="POST" action="SubmitAssignment">
             <input type="hidden" name="studentEnno" value="${Data.getsEnNumber()}">
-            <select id="completeAssignment" name="completeAssignment">
+            
+            <select class="assignment_select" id="completeAssignment" name="completeAssignment">
                  <option value="">Select assignment name</option>
                 <c:forEach items="${assignments}" var="assignment" varStatus="status">
                 <c:if test="${not AssignmentStatus[status.index].isSubmited()}">
@@ -28,20 +32,29 @@
                     </c:if>
                 </c:forEach>
             </select>
-            <input type="submit">
+            
+            <div class="btn">
+                <input id="submit" type="submit" value="submit">
+            </div>
+            
         </form>
+        <div class="line"></div>
+        <h2 class="assignment_header">Assignments</h2>
         
-        <h2>Assignments</h2>
-        
-        <table style="text-align:center">
-            <th>Index</th>
-            <th>Year</th>
-            <th>Branch</th>
-            <th>Subject</th>
-            <th>Name</th>
-            <th>Teacher</th>
-            <th>Date</th>
-            <th>Status</th>
+        <table class="assignment_table">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Year</th>
+                    <th>Branch</th>
+                    <th>Subject</th>
+                    <th>Name</th>
+                    <th>Teacher</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
             <c:forEach items="${assignments}" var="assignment" varStatus="status">
                 <tr>
                     <td>${status.index+1}</td>
@@ -52,9 +65,9 @@
                     <td>${TeacherName[status.index]}</td>
                     <td>${assignment.getSubmission_date()}</td>
                     <td><c:if test="${AssignmentStatus[status.index].isSubmited()}">Submitted</c:if><c:if test="${not AssignmentStatus[status.index].isSubmited()}">Not Submitted</c:if></td>
-                </form>
                 </tr>
             </c:forEach>
+            </tbody>
         </table>
     </body>
-
+</html>
