@@ -1,7 +1,7 @@
 <%-- 
     Document   : loginPage
     Created on : 08-Apr-2020, 10:54:16 PM
-    Author     : RUDRESH PATEL
+    Author     : RUDRESH PATEL, Win_It
 --%>
 
 <%@page import="java.text.SimpleDateFormat"%>
@@ -16,30 +16,32 @@
         <title>Student Home</title>
     </head>
     <body>
-        <h1 class="assignment_header">Welcome, ${Data.getsName()}</h1>
+        <h1 class="header">Welcome, ${Data.getsName()}</h1>
         <div class="line"></div>
         
-        <h5 class="assignment_header_small">Select an assignment</h5>
+        <h5 class="header_small">Select an assignment</h5>
         
-        <form method="POST" action="SubmitAssignment">
-            <input type="hidden" name="studentEnno" value="${Data.getsEnNumber()}">
-            
-            <select class="assignment_select" id="completeAssignment" name="completeAssignment">
-                 <option value="">Select assignment name</option>
-                <c:forEach items="${assignments}" var="assignment" varStatus="status">
-                <c:if test="${not AssignmentStatus[status.index].isSubmited()}">
-                        <option value="${assignment.getAssignment_name()}">${assignment.getAssignment_name()}</option>
-                    </c:if>
-                </c:forEach>
-            </select>
-            
-            <div class="btn">
-                <input id="submit" type="submit" value="submit">
-            </div>
-            
-        </form>
+        <div class ="container">
+            <form method="POST" action="SubmitAssignment">
+                <input type="hidden" name="studentEnno" value="${Data.getsEnNumber()}">
+
+                <select class="assignment_select" id="completeAssignment" name="completeAssignment">
+                    <option value="">Select assignment name</option>
+                    <c:forEach items="${assignments}" var="assignment" varStatus="status">
+                        <c:if test="${not AssignmentStatus[status.index].isSubmited()}">
+                            <option value="${assignment.getAssignment_name()}">${assignment.getAssignment_name()}</option>
+                        </c:if>
+                    </c:forEach>
+                </select>
+
+                <div class="btn">
+                    <input id="submit" type="submit" value="submit">
+                </div>
+
+            </form>
+        </div>
         <div class="line"></div>
-        <h2 class="assignment_header">Assignments</h2>
+        <h2 class="header">Assignments</h2>
         
         <table class="assignment_table">
             <thead>

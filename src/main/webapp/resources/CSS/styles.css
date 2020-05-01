@@ -1,18 +1,25 @@
+/* 
+    Document   : styles
+    Created on : 08-Apr-2020, 12:28:44 AM
+    Author     : Win_It
+*/
+
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap');
 
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Fira Sans', 'Roboto', sans-serif;
     user-select: none;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
     background-color: #e3e3e3;
 }
 
 /* body {
-     
+
 } */
 
 .container {
@@ -51,7 +58,8 @@ input[type=number] {
 }
 
 .teacher-signup-form,
-.student-signup-form {
+.student-signup-form,
+.assignment-form {
     box-sizing: border-box;
     padding: 40px;
     clear: both;
@@ -67,10 +75,10 @@ input[type=number] {
     margin-bottom: 25px;
     border-radius: 10px;
     color: #34b3a0;
-    font-size: 1em;
+    font-size: 16px;
+    font-weight: lighter;
     background-color: #e3e3e3;
     border-width: 0px;
-    font-size: 14px;
     box-shadow:inset -3px -3px 10px rgba(230, 230, 230, 0.7),
              4px 4px 10px rgb(250, 250, 250)
         ,
@@ -140,13 +148,13 @@ input[type=number] {
                  -4px -4px 10px rgba(150, 150, 150, 0.2);
 }
 
-.assignment_header{
+.header{
     color: #34b3a0;
     margin: 50px 100px;
     font-size: 2.5em;
 }
 
-.assignment_header_small {
+.header_small {
     color: #34b3a0;
     margin: 10px 100px;
     font-size: 1.5em;
@@ -161,11 +169,10 @@ input[type=number] {
 
 /* Tables */
 .assignment_table {
-    width: 80%;
+    width: 100%;
     min-width: 700px;
-    border-collapse: collapse;
     text-align: left;
-    margin: 30px 100px;
+    padding: 50px;
     font-size: 1.1em;
 }
 
@@ -236,18 +243,19 @@ input[type=number] {
 
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    /* color: #3e3e40; */
+    color: #34b3a0;
     font-family: roboto;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-    /* color: #3e3e40; */
+    color: #34b3a0;
     font-family: roboto;
 }
 :-ms-input-placeholder { /* IE 10+ */
-    /* color: #3e3e40; */
+    color: #34b3a0;
     font-family: roboto;
 }
 :-moz-placeholder { /* Firefox 18- */
-    /* color: #3e3e40; */
+    color: #34b3a0;
     font-family: roboto;
 }
+

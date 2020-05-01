@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 08-Apr-2020, 12:28:44 AM
-    Author     : RUDRESH PATEL
+    Author     : RUDRESH PATEL, Win_It
 --%>
 
 <%@page isELIgnored="false"%>
@@ -20,7 +20,7 @@
                 $(".teacher").click(function () {
                     $(".student-signup-form").hide();
                     $(".teacher-signup-form").show();
-                    $(".student").css("color", "black");
+                    $(".student").css("color", "#3e3e40");
                     $(".teacher").css("color", "#34b3a0");
                 });
 
@@ -28,7 +28,7 @@
                     $(".teacher-signup-form").hide();
                     $(".student-signup-form").show();
                     $(".student").css("color", "#34b3a0");
-                    $(".teacher").css("color", "black");
+                    $(".teacher").css("color", "#3e3e40");
                 });
 
             });
@@ -45,7 +45,7 @@
                     <!-- <input type="email" name="" placeholder="Email Address" class="input"><br> -->
                     <input type="password" name="studentPassword" placeholder="Password" class="input" required=""><br>
                     <div class="btn">
-                        <button formaction="StudentLogin">Login</button>
+                        <button formaction="StudentRecord/StudentLogin">Login</button>
                     </div>
                 </form>
 
@@ -56,7 +56,7 @@
                     <!-- <input type="email" name="" placeholder="Email Address" class="input"><br> -->
                     <input type="password" name="teacherPass" placeholder="Password" class="input" required=""><br>
                     <div class="btn">
-                        <button formaction="TeacherLogin">Login</button>
+                        <button formaction="StudentRecord/TeacherLogin">Login</button>
                     </div>
                 </form>
             </div>

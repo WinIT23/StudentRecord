@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author KHATRI
+ * @author KHATRI, Win_It
  */
 @Entity
 @Table(name="assignment")
